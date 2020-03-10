@@ -79,11 +79,17 @@ public class MovieUtils {
                 .build()
                 .toString();
     }
-    //Gets images
-    public static String buildMovieImageSearch(String fileSize){
-        return Uri.parse(MOVIE_IMG_BASE_URL + fileSize + "/").buildUpon()
-                .appendQueryParameter(API_KEY_PARAM,MOVIE_API_KEY)
+
+    public static String buildMovieImageSearchByMovieID(String movieID) {
+        return Uri.parse(MOVIE_DB_BASE_URL + MOVIE + "/" + movieID + "/images").buildUpon()
+                .appendQueryParameter(API_KEY_PARAM, MOVIE_API_KEY)
                 .build()
+                .toString();
+    }
+
+    //Gets specific image with given fileSize and image URL
+    public static String buildMovieImageSearch(String fileSize, String imgURL){
+        return Uri.parse(MOVIE_IMG_BASE_URL + fileSize + "/" + imgURL)
                 .toString();
     }
     public static ArrayList<MovieNameSearchResult> parseMovieNameJSON(String movieNameJSON){
