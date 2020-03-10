@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.movielist.data.MovieDetails;
 import com.example.movielist.data.MovieNameSearchResult;
 import com.example.movielist.utility.*;
 
@@ -57,7 +58,7 @@ public class SearchActivity extends AppCompatActivity {
             String searchResults = null;
             try {
                 searchResults = NetworkUtils.doHttpGet(url);
-                Log.d(TAG,"Results from HTTPGET" + searchResults);
+                Log.d(TAG,"Results from HTTPGET movieSearch" + searchResults);
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -79,7 +80,7 @@ public class SearchActivity extends AppCompatActivity {
             String searchResults = null;
             try {
                 searchResults = NetworkUtils.doHttpGet(url);
-                Log.d(TAG,"Results from HTTPGET" + searchResults);
+                Log.d(TAG,"Results from HTTPGET Detail" + searchResults);
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -89,9 +90,9 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-           //ArrayList<MovieNameSearchResult> searchResultList = MovieUtils.parseMovieNameJSON(s);
-           //System.out.println(Arrays.deepToString(searchResultList.toArray()));
-            testQueryTV.setText(s);
+           MovieDetails movieDetails = MovieUtils.parseMovieDetailsJSON(s);
+           Log.d(TAG, "MovieDetailResult " + movieDetails.title + " " + movieDetails.overview);
+           testQueryTV.setText(s);
         }
     }
     public class MovieImgSearchByMovieID extends AsyncTask<String, Void, String> {
@@ -101,7 +102,7 @@ public class SearchActivity extends AppCompatActivity {
             String searchResults = null;
             try {
                 searchResults = NetworkUtils.doHttpGet(url);
-                Log.d(TAG,"Results from HTTPGET" + searchResults);
+                Log.d(TAG,"Results from HTTPGET movieIMGID" + searchResults);
             } catch (IOException e){
                 e.printStackTrace();
             }
@@ -111,8 +112,6 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s){
             super.onPostExecute(s);
-            //ArrayList<MovieNameSearchResult> searchResultList = MovieUtils.parseMovieNameJSON(s);
-            //System.out.println(Arrays.deepToString(searchResultList.toArray()));
             testQueryTV.setText(s);
         }
     }
