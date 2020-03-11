@@ -28,7 +28,7 @@
             app:itemIconTint="#FFFFFF"
             app:itemTextColor="#FFFFFF"
             app:menu="@menu/navigation" />
-        
+
     </FrameLayout>
 
 </LinearLayout>
