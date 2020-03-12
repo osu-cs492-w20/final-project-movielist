@@ -6,7 +6,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {CreatedUserList.class, CreatedUserList_XRef.class, ListWithMovies.class, Movies.class}, version = 1)
+@Database(entities = {CreatedUserList.class, Movies.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract SavedListsDao savedListsDao();
     private static volatile AppDatabase INSTANCE;

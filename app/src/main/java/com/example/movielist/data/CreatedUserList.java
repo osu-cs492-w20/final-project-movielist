@@ -7,7 +7,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity (tableName = "CreatedUserList")
+@Entity
 public class CreatedUserList implements Serializable {
 
     @PrimaryKey

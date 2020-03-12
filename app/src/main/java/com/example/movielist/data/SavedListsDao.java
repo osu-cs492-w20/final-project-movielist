@@ -12,35 +12,30 @@ import androidx.room.Transaction;
 @Dao
 public interface SavedListsDao {
 
+    //Inserts entries from the SQLlite database
     @Insert
     void insert(Movies movies);
 
     @Insert
     void insert(CreatedUserList createdUserList);
 
-    @Insert
-    void insert(ListWithMovies listWithMovies);
-    
-    @Insert
-    void insert(CreatedUserList_XRef createdUserList_xRef);
-
     //Deletes entries from the SQLlite database
     @Delete
-    void Delete(Movies movies);
+    void delete(Movies movies);
 
     @Delete
-    void Delete(CreatedUserList createdUserList);
+    void delete(CreatedUserList createdUserList);
 
-    @Delete
-    void Delete(ListWithMovies listWithMovies);
-
-    @Delete
-    void Delete(CreatedUserList_XRef createdUserList_xRef);
-
-    @Transaction
     @Query("SELECT * FROM CreatedUserList")
-    public List<ListWithMovies> getMovieLists();
+    public LiveData<List<CreatedUserList>> getMovieLists();
 
+    @Query("SELECT * FROM Movies")
+    public LiveData<List<Movies>> getAllMovies();
 
+    @Query("SELECT * FROM Movies WHERE Movies.movie_list_id=:movie_list_id")
+    public LiveData<List<Movies>> getListOfMovies(final int movie_list_id);
+
+    @Query("SELECT * FROM Movies")
+    public List<Movies> getMoviesTest();
 
 }

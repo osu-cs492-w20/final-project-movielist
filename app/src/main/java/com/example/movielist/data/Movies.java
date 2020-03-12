@@ -7,12 +7,13 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "CreatedUserList",
-        foreignKeys = @ForeignKey(entity = CreatedUserList.class,
+@Entity(foreignKeys = @ForeignKey(
+        entity = CreatedUserList.class,
         parentColumns = "list_id",
         childColumns = "movie_list_id",
-        onDelete = ForeignKey.NO_ACTION
+        onDelete = CASCADE
 ))
 public class Movies implements Serializable {
     @PrimaryKey
