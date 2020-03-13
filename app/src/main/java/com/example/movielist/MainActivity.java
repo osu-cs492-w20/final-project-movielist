@@ -23,7 +23,7 @@ import com.example.movielist.data.Movies;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView mMovieListRV;
-    private SavedListViewModel SavedVM;
+    private SavedListViewModel savedVM;
 
 
 
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void testSQLQuieries(){
 
-        SavedVM = new ViewModelProvider(
+        savedVM = new ViewModelProvider(
                 this,
                 new ViewModelProvider.AndroidViewModelFactory(getApplication())
         ).get(SavedListViewModel.class);
@@ -73,15 +73,15 @@ public class MainActivity extends AppCompatActivity {
         test2.list_id = 321;
         test2.list_title = "MyLis1t12";
         test2.user_name = "Sean12311223";
-        SavedVM.insertUserList(test2);
+        savedVM.insertUserList(test2);
         test1.movie_title = "Banachocula - 2";
         test1.movie_id = 124534;
         test1.movie_list_id = 321;
-        SavedVM.insertMovie(test1);
+        savedVM.insertMovie(test1);
 
 
 
-        SavedVM.insertMovie(test1);
+        savedVM.insertMovie(test1);
         final Observer<List<Movies>> testObv = new Observer<List<Movies>>() {
             @Override
             public void onChanged(List<Movies> movies) {
@@ -100,15 +100,15 @@ public class MainActivity extends AppCompatActivity {
         test1.movie_id = 1652;
         test1.movie_title = "BooBerryCrunch - 3";
 
-        SavedVM.getAllMovies().observe(this, testObv);
-        SavedVM.getListOfMovies(321).observe(this, testObv);
-        SavedVM.getAllLists().observe(this, testObv2);
+        savedVM.getAllMovies().observe(this, testObv);
+        savedVM.getListOfMovies(321).observe(this, testObv);
+        savedVM.getAllLists().observe(this, testObv2);
 
-        //SavedVM.deleteList(test2);
+        //savedVM.deleteList(test2);
 
-        /*SavedVM.getAllMovies().observe(this, testObv);
-        SavedVM.getListOfMovies(321).observe(this, testObv);
-        SavedVM.getAllLists().observe(this, testObv2);*/
+        /*savedVM.getAllMovies().observe(this, testObv);
+        savedVM.getListOfMovies(321).observe(this, testObv);
+        savedVM.getAllLists().observe(this, testObv2);*/
     }
   
     @Override
