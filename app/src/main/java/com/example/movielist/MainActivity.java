@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
   
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -21,9 +22,10 @@ import com.example.movielist.SearchActivity;
 import com.example.movielist.data.CreatedUserList;
 import com.example.movielist.data.Movies;
 
-public class MainActivity extends AppCompatActivity {
-    private RecyclerView mMovieListRV;
+public class MainActivity extends AppCompatActivity implements CreatedUserListAdapter.CreatedUserListClickListener {
+    private RecyclerView mCreatedUserListRV;
     private SavedListViewModel savedVM;
+    private CreatedUserListAdapter mCreatedUserListAdapter;
 
 
 
@@ -38,7 +40,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
-        mMovieListRV = findViewById(R.id.rv_movie_list);
+        mCreatedUserListRV = findViewById(R.id.rv_movie_list);
+        mCreatedUserListAdapter = new CreatedUserListAdapter(this);
+        mCreatedUserListRV.setAdapter(mCreatedUserListAdapter);
+        mCreatedUserListRV.setLayoutManager(new LinearLayoutManager(this));
+        mCreatedUserListRV.setHasFixedSize(true);
+
 
 
         //Instantiates the bottom nav bar and creates a listener just like options selected
@@ -115,5 +122,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public void onCreatedUserListsClick(CreatedUserList createdUserList) {
+
     }
 }
