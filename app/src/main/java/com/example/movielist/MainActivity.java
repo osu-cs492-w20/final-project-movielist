@@ -1,13 +1,17 @@
 package com.example.movielist;
-import java.util.List;  
-  
+import java.util.List;
+
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.os.Bundle;
 import android.util.Log;
-  
+import android.widget.EditText;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.movielist.SearchActivity;
 import com.example.movielist.data.CreatedUserList;
 import com.example.movielist.data.Movies;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements CreatedUserListAdapter.CreatedUserListClickListener {
     private RecyclerView mCreatedUserListRV;
@@ -45,8 +50,15 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         mCreatedUserListRV.setAdapter(mCreatedUserListAdapter);
         mCreatedUserListRV.setLayoutManager(new LinearLayoutManager(this));
         mCreatedUserListRV.setHasFixedSize(true);
+        //ViewModel
+        savedVM = new ViewModelProvider(
+                this,
+                new ViewModelProvider.AndroidViewModelFactory(getApplication())
+        ).get(SavedListViewModel.class);
 
-        testSQLQuieries();
+        //Uncomment to Start test---------------------------
+        //testSQLQuieries();
+        //End test-----------------------------
 
         //Instantiates the bottom nav bar and creates a listener just like options selected
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
@@ -68,12 +80,65 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_add:
+                //put "addList()" here once implemented
+                addList(this);
+
+                return true;
+            case R.id.action_settings:
+                //Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                //startActivity(settingsIntent);
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    //The function that prompts the user to add a new list
+    private void addList(Context c){
+
+        final CreatedUserList createdUserList = new CreatedUserList();
+
+            //Edit text box------------------------------------------------------------------
+            final EditText taskEditText = new EditText(c);
+            AlertDialog dialog = new AlertDialog.Builder(c)
+                    .setTitle("Create a new list")
+                    .setMessage("What do you want to name it?")
+                    .setView(taskEditText)
+                    .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String task = String.valueOf(taskEditText.getText());
+                            //Implement adding list
+                            createdUserList.list_title = task;
+                        }
+                    })
+                    .setNegativeButton("Cancel", null)
+                    .create();
+            dialog.show();
+            //Edit text box end---------------------------------------------------------------
+
+        //dis not working will fix later
+       /* final Observer<List<CreatedUserList>> testObv2 = new Observer<List<CreatedUserList>>() {
+            @Override
+            public void onChanged(List<CreatedUserList> movies) {
+                mCreatedUserListAdapter.updateCreatedUserList(movies);
+                Log.d("TEST", "onChanged CreatedUserList: " + movies.get(0).list_title);
+            }
+        };
+
+        savedVM.getAllLists().observe(this, testObv2);*/
+    }
+
     private void testSQLQuieries(){
 
-        savedVM = new ViewModelProvider(
+       /* savedVM = new ViewModelProvider(
                 this,
                 new ViewModelProvider.AndroidViewModelFactory(getApplication())
-        ).get(SavedListViewModel.class);
+        ).get(SavedListViewModel.class);*/
 
         Movies test1 = new Movies();
         CreatedUserList test2 = new CreatedUserList();
