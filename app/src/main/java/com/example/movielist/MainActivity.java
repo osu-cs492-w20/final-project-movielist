@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         mCreatedUserListRV.setLayoutManager(new LinearLayoutManager(this));
         mCreatedUserListRV.setHasFixedSize(true);
 
-
+        testSQLQuieries();
 
         //Instantiates the bottom nav bar and creates a listener just like options selected
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         final Observer<List<Movies>> testObv = new Observer<List<Movies>>() {
             @Override
             public void onChanged(List<Movies> movies) {
+
                 Log.d("TEST", "onChanged Movies: " + movies.get(0).movie_title);
             }
         };
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         final Observer<List<CreatedUserList>> testObv2 = new Observer<List<CreatedUserList>>() {
             @Override
             public void onChanged(List<CreatedUserList> movies) {
+                mCreatedUserListAdapter.updateCreatedUserList(movies);
                 Log.d("TEST", "onChanged CreatedUserList: " + movies.get(0).list_title);
             }
         };
