@@ -12,9 +12,6 @@ public class CreatedUserList implements Serializable {
 
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "list_id")
-    public int list_id;
-
     @ColumnInfo(name = "list_title")
     public String list_title;
 

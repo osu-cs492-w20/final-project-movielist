@@ -32,8 +32,8 @@ public interface SavedListsDao {
     @Query("SELECT * FROM Movies")
     public LiveData<List<Movies>> getAllMovies();
 
-    @Query("SELECT * FROM Movies WHERE Movies.movie_list_id=:movie_list_id")
-    public LiveData<List<Movies>> getListOfMovies(final int movie_list_id);
+    @Query("SELECT * FROM Movies WHERE Movies.movie_list_title=:movie_list_title")
+    public LiveData<List<Movies>> getListOfMovies(final String movie_list_title);
 
     @Query("SELECT * FROM Movies")
     public List<Movies> getMoviesTest();

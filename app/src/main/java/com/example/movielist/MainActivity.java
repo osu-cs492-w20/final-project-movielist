@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         ).get(SavedListViewModel.class);
 
         //Uncomment to Start test---------------------------
-        //testSQLQuieries();
+        testSQLQuieries();
         //End test-----------------------------
 
         //Instantiates the bottom nav bar and creates a listener just like options selected
@@ -142,13 +142,20 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
 
         Movies test1 = new Movies();
         CreatedUserList test2 = new CreatedUserList();
-        test2.list_id = 321;
-        test2.list_title = "MyLis1t12";
-        test2.user_name = "Sean12311223";
+        test2.list_title = "1M2234yLis451t12asd";
+        test2.user_name = "Sean1231121123";
         savedVM.insertUserList(test2);
         test1.movie_title = "Banachocula - 2";
-        test1.movie_id = 124534;
-        test1.movie_list_id = 321;
+        test1.movie_id = 1245534;
+        test1.movie_list_title = "1M2234yLis451t12asd";
+        savedVM.insertMovie(test1);
+        test1.movie_title = "Banachocula - 3";
+        test1.movie_id = 1245334;
+        test1.movie_list_title = "1M2234yLis451t12asd";
+        savedVM.insertMovie(test1);
+        test1.movie_title = "Banachocula - 4";
+        test1.movie_id = 1245434;
+        test1.movie_list_title = "1M2234yLis451t12asd";
         savedVM.insertMovie(test1);
 
 
@@ -157,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         final Observer<List<Movies>> testObv = new Observer<List<Movies>>() {
             @Override
             public void onChanged(List<Movies> movies) {
-
                 Log.d("TEST", "onChanged Movies: " + movies.get(0).movie_title);
             }
         };
@@ -170,12 +176,12 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             }
         };
 
-        test1.movie_list_id = 321;
+        test1.movie_list_title = "MyLis1t12";
         test1.movie_id = 1652;
         test1.movie_title = "BooBerryCrunch - 3";
-
+        String listName = "1M2234yLis451t12asd";
         savedVM.getAllMovies().observe(this, testObv);
-        savedVM.getListOfMovies(321).observe(this, testObv);
+        savedVM.getListOfMovies(listName).observe(this, testObv);
         savedVM.getAllLists().observe(this, testObv2);
 
         //savedVM.deleteList(test2);

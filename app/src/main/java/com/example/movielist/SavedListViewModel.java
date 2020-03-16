@@ -46,7 +46,7 @@ public class SavedListViewModel extends AndroidViewModel {
         return mRepository.getAllMovies();
     }
 
-    public LiveData<List<Movies>> getListOfMovies(int listID){
+    public LiveData<List<Movies>> getListOfMovies(String listID){
         return mRepository.getListOfMovies(listID);
     }
 

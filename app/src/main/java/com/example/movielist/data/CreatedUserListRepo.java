@@ -44,7 +44,7 @@ public class CreatedUserListRepo {
         return mDAO.getAllMovies();
     }
 
-    public LiveData<List<Movies>> getListOfMovies(int listID){
+    public LiveData<List<Movies>> getListOfMovies(String listID){
         return mDAO.getListOfMovies(listID);
     }
 
