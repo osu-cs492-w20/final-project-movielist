@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Entertainment List</string>
+    <string name="search_box_hint">Search Movie</string>
+    <string name="search_button_text">Movie Search</string>
+    <string name="loading_error">There was an issue searching for the movie.</string>
     <string name="search_hint">Movie Name</string>
     <string name="action_settings">Settings</string>
     <string name="action_add">Add List</string>

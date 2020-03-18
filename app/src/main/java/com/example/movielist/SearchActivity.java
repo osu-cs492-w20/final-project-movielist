@@ -1,118 +1,98 @@
 package com.example.movielist;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Movie;
-import android.os.AsyncTask;
+
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.movielist.data.MovieDetails;
 import com.example.movielist.data.MovieNameSearchResult;
-import com.example.movielist.utility.*;
+import com.example.movielist.data.Status;
+import java.util.List;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
+public class SearchActivity extends AppCompatActivity implements MovieSearchAPIAdapter.MovieSearchClickListener {
+    private String TAG = SearchActivity.class.getSimpleName();
 
-public class SearchActivity extends AppCompatActivity {
-    private TextView testQueryTV;
-    private MovieUtils movieUtils;
-    private String TAG = "SearchActivity";
+    private EditText searchMovieET;
+    private RecyclerView movieSearchResultsRV;
+    private ProgressBar mLoadingPB;
+    private TextView mErrorMSGTV;
+
+    private MovieSearchAPIAdapter movieSearchAdapter;
+    private SearchMovieViewModel searchMovieVM;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        searchMovieET = findViewById(R.id.et_search_box);
+        movieSearchResultsRV = findViewById(R.id.rv_search_results);
 
-        //ArrayList<MovieNameSearchResult> query =
-        testQueryTV = findViewById(R.id.tv_search_txt);
-        //testQueryTV.setText(query.toString());
-        doMovieSearch("Batman");
-        doMovieDetailSearch("272");
-        doMovieImgSearch("272");
+        movieSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
+        movieSearchResultsRV.setHasFixedSize(true);
+
+        movieSearchAdapter = new MovieSearchAPIAdapter(this);
+        movieSearchResultsRV.setAdapter(movieSearchAdapter);
+
+        mLoadingPB = findViewById(R.id.pb_loading_indicator);
+        mErrorMSGTV = findViewById(R.id.tv_error_message);
+        searchMovieVM = new ViewModelProvider(this,new ViewModelProvider.AndroidViewModelFactory(getApplication())).get(SearchMovieViewModel.class);
+        searchMovieVM.getMovieSearchResults().observe(this, new Observer<List<MovieNameSearchResult>>() {
+            @Override
+            public void onChanged(List<MovieNameSearchResult> movieSearchResults) {
+                movieSearchAdapter.updateSearchResults(movieSearchResults);
+            }
+        });
+
+        searchMovieVM.getLoadingStatus().observe(this, new Observer<Status>(){
+            @Override
+            public void onChanged(Status status) {
+                if (status == Status.LOADING) {
+                   mLoadingPB.setVisibility(View.VISIBLE);
+                } else if (status == Status.SUCCESS) {
+                    mLoadingPB.setVisibility(View.INVISIBLE);
+                    movieSearchResultsRV.setVisibility(View.VISIBLE);
+                    mErrorMSGTV.setVisibility(View.INVISIBLE);
+                } else {
+                    mLoadingPB.setVisibility(View.INVISIBLE);
+                    movieSearchResultsRV.setVisibility(View.INVISIBLE);
+                    mErrorMSGTV.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        Button searchButton = findViewById(R.id.btn_search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchQuery = searchMovieET.getText().toString();
+                if (!TextUtils.isEmpty(searchQuery)) {
+                    //TODO insert search query here
+                    doMovieSearch(searchQuery);
+                }
+            }
+        });
+
     }
-
 
     private void doMovieSearch(String search) {
-        String url = MovieUtils.buildMovieNameSearchURL(search);
-        Log.d(TAG, "Doing API query with: " + url);
-        new MovieSearchTask().execute(url);
-    }
-    private void doMovieDetailSearch(String search) {
-        String url = MovieUtils.buildMovieSearchByID(search);
-        Log.d(TAG,"Doing detail search by ID with: " + url);
-        new MovieSearchDetailTask().execute(url);
+        searchMovieVM.loadMovieSearchResults(search);
     }
 
-    private void doMovieImgSearch(String movieID){
-        String url = MovieUtils.buildMovieImageSearchByMovieID(movieID);
-        Log.d(TAG,"Doing img searches by movie ID with: " + url);
-        new MovieImgSearchByMovieID().execute(url);
-    }
-    public class MovieSearchTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            String url = strings[0];
-            String searchResults = null;
-            try {
-                searchResults = NetworkUtils.doHttpGet(url);
-                Log.d(TAG,"Results from HTTPGET movieSearch" + searchResults);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            return searchResults;
-        }
-
-        @Override
-        protected void onPostExecute(String s){
-            super.onPostExecute(s);
-            ArrayList<MovieNameSearchResult> searchResultList = MovieUtils.parseMovieNameJSON(s);
-            System.out.println(Arrays.deepToString(searchResultList.toArray()));
-            testQueryTV.setText(s);
-        }
-    }
-    public class MovieSearchDetailTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            String url = strings[0];
-            String searchResults = null;
-            try {
-                searchResults = NetworkUtils.doHttpGet(url);
-                Log.d(TAG,"Results from HTTPGET Detail" + searchResults);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            return searchResults;
-        }
-
-        @Override
-        protected void onPostExecute(String s){
-            super.onPostExecute(s);
-           MovieDetails movieDetails = MovieUtils.parseMovieDetailsJSON(s);
-           Log.d(TAG, "MovieDetailResult " + movieDetails.title + " " + movieDetails.overview);
-           testQueryTV.setText(s);
-        }
-    }
-    public class MovieImgSearchByMovieID extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            String url = strings[0];
-            String searchResults = null;
-            try {
-                searchResults = NetworkUtils.doHttpGet(url);
-                Log.d(TAG,"Results from HTTPGET movieIMGID" + searchResults);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            return searchResults;
-        }
-
-        @Override
-        protected void onPostExecute(String s){
-            super.onPostExecute(s);
-            testQueryTV.setText(s);
-        }
+    @Override
+    public void onMovieClick() {
+        //TODO IMPLEMENT NEXT ACTIVITY
     }
 }
