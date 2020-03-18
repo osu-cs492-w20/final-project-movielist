@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
     private RecyclerView mCreatedUserListRV;
     private SavedListViewModel savedVM;
     private CreatedUserListAdapter mCreatedUserListAdapter;
+    private int iterator = 0;
 
 
 
@@ -98,6 +99,11 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             case R.id.action_settings:
                 //Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 //startActivity(settingsIntent);
+
+                //For testing name the list Bob
+                clicker(iterator);
+                
+                iterator++;
                 return true;
             default:
                 return false;
@@ -197,6 +203,16 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
 
     @Override
     public void onCreatedUserListsClick(CreatedUserList createdUserList) {
+        Intent intent = new Intent(this, ListActivity.class);
+        intent.putExtra(ListActivity.EXTRA_LIST_OBJECT, createdUserList);
+        startActivity(intent);
+    }
 
+    public void clicker(int i){
+        Movies movie= new Movies();
+        movie.movie_title = "Banachocula - " + i;
+        movie.movie_id = 1245534 + i;
+        movie.movie_list_title = "Bob";
+        savedVM.insertMovie(movie);
     }
 }
