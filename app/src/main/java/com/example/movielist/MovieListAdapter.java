@@ -1,6 +1,8 @@
 package com.example.movielist;
 
 import com.example.movielist.data.Movies;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>{
     private List<Movies> moviesList;
+    private onMovieItemClickedListener mMovieClickListener;
 
-    public MovieListAdapter(){
+    public interface onMovieItemClickedListener {
+        void onMovieItemClicked(Movies movie);
+    }
+
+    public MovieListAdapter(onMovieItemClickedListener listener){
+        mMovieClickListener = listener;
         moviesList = new ArrayList<>();
     }
 
@@ -58,6 +66,14 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         public MovieListViewHolder (View itemView){
             super(itemView);
             Title = itemView.findViewById(R.id.tv_movie_title);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v){
+                    mMovieClickListener.onMovieItemClicked(moviesList.get(getAdapterPosition()));
+                    Log.d("OCL", "onClick: " + moviesList.get(getAdapterPosition()).movie_title);
+                }
+            });
         }
 
         void bind(String newMovieTitle){

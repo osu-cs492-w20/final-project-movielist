@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         });
 
         //Uncomment to Start test---------------------------
-        //testSQLQuieries();
         //End test-----------------------------
 
         //Instantiates the bottom nav bar and creates a listener just like options selected
@@ -101,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                 //startActivity(settingsIntent);
 
                 //For testing name the list Bob
-                clicker(iterator);
+                //clicker(iterator);
                 
                 iterator++;
                 return true;
@@ -136,64 +135,6 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             dialog.show();
             //Edit text box end---------------------------------------------------------------
     }
-
-    private void testSQLQuieries(){
-
-       /* savedVM = new ViewModelProvider(
-                this,
-                new ViewModelProvider.AndroidViewModelFactory(getApplication())
-        ).get(SavedListViewModel.class);*/
-
-        Movies test1 = new Movies();
-        CreatedUserList test2 = new CreatedUserList();
-        test2.list_title = "1M2234yLis451t12asd";
-        test2.user_name = "Sean1231121123";
-        savedVM.insertUserList(test2);
-        test1.movie_title = "Banachocula - 2";
-        test1.movie_id = 1245534;
-        test1.movie_list_title = "1M2234yLis451t12asd";
-        savedVM.insertMovie(test1);
-        test1.movie_title = "Banachocula - 3";
-        test1.movie_id = 1245334;
-        test1.movie_list_title = "1M2234yLis451t12asd";
-        savedVM.insertMovie(test1);
-        test1.movie_title = "Banachocula - 4";
-        test1.movie_id = 1245434;
-        test1.movie_list_title = "1M2234yLis451t12asd";
-        savedVM.insertMovie(test1);
-
-
-
-        savedVM.insertMovie(test1);
-        final Observer<List<Movies>> testObv = new Observer<List<Movies>>() {
-            @Override
-            public void onChanged(List<Movies> movies) {
-                Log.d("TEST", "onChanged Movies: " + movies.get(0).movie_title);
-            }
-        };
-
-        final Observer<List<CreatedUserList>> testObv2 = new Observer<List<CreatedUserList>>() {
-            @Override
-            public void onChanged(List<CreatedUserList> movies) {
-                mCreatedUserListAdapter.updateCreatedUserList(movies);
-                Log.d("TEST", "onChanged CreatedUserList: " + movies.get(0).list_title);
-            }
-        };
-
-        test1.movie_list_title = "MyLis1t12";
-        test1.movie_id = 1652;
-        test1.movie_title = "BooBerryCrunch - 3";
-        String listName = "1M2234yLis451t12asd";
-        savedVM.getAllMovies().observe(this, testObv);
-        savedVM.getListOfMovies(listName).observe(this, testObv);
-        savedVM.getAllLists().observe(this, testObv2);
-
-        //savedVM.deleteList(test2);
-
-        /*savedVM.getAllMovies().observe(this, testObv);
-        savedVM.getListOfMovies(321).observe(this, testObv);
-        savedVM.getAllLists().observe(this, testObv2);*/
-    }
   
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -208,11 +149,13 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         startActivity(intent);
     }
 
+
+    //For testing insertions
     public void clicker(int i){
         Movies movie= new Movies();
         movie.movie_title = "Banachocula - " + i;
         movie.movie_id = 1245534 + i;
-        movie.movie_list_title = "Bob";
+        movie.movie_list_title = "Sean";
         savedVM.insertMovie(movie);
     }
 }
