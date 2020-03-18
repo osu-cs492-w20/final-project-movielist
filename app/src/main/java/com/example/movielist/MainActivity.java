@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             case R.id.action_settings:
                 //Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 //startActivity(settingsIntent);
+                TestIntent();
                 return true;
             default:
                 return false;
@@ -129,6 +130,19 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                     .create();
             dialog.show();
             //Edit text box end---------------------------------------------------------------
+    }
+
+    private void TestIntent(){
+        Movies movie = new Movies();
+        movie.movie_list_title = "Test";
+        movie.movie_title = "Banachocula - 4";
+        movie.movie_id = 112233;
+        movie.movie_language = "Chocuish";
+        movie.movie_votes = 3;
+
+        Intent favorite_Intent = new Intent(MainActivity.this, MovieDetailActivity.class);
+        favorite_Intent.putExtra(MovieDetailActivity.EXTRA_MOVIES, movie);
+        startActivity(favorite_Intent);
     }
 
     private void testSQLQuieries(){

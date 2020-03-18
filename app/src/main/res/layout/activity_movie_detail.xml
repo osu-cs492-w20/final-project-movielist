@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/movie_poster"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_photo_black_24dp"
+        />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/right_block"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/title_details"
+        android:layout_alignTop="@+id/title_details"
+        android:layout_toRightOf="@+id/movie_poster"
+        android:orientation="vertical"
+        tools:ignore="NotSibling">
+
+        <TextView
+            android:id="@+id/title_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Testing the apple sauce is saucy"
+            android:textColor="#000"
+            android:textSize="32sp"/>
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX=".5"
+            android:scaleY=".5"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            android:saveEnabled="true"
+            android:numStars="5"/>
+
+        <TextView
+            android:id="@+id/subtitle_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Testing the apple sauce is saucy, the tomato paste is pasty, what is the apple-tomatoe taste is tasty"
+            android:textColor="#000"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/description_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/right_block"
+        android:padding="9dp"
+        android:text="Testing the apple sauce is saucy, the tomato paste is pasty, what is the apple-tomatoe taste is tasty"
+        android:textColor="#000"
+        android:textSize="13sp"/>
+
+
+
+</RelativeLayout>
