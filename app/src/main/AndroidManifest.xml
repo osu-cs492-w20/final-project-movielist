@@ -12,10 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchMovieDetailActivity"></activity>
+        <activity
+            android:name=".SearchMovieDetailActivity"
+            android:parentActivityName=".SearchActivity">
+        </activity>
         <activity
             android:name=".SearchActivity"
-            android:parentActivityName=".SearchActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
