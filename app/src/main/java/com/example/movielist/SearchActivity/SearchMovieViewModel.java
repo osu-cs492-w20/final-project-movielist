@@ -1,4 +1,4 @@
-package com.example.movielist;
+package com.example.movielist.SearchActivity;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;

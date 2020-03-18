@@ -7,25 +7,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.movielist.ListActivity.ListActivity;
+import com.example.movielist.SearchActivity.SearchActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.example.movielist.SearchActivity;
 import com.example.movielist.data.CreatedUserList;
 import com.example.movielist.data.Movies;
-import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements CreatedUserListAdapter.CreatedUserListClickListener {
     private RecyclerView mCreatedUserListRV;
@@ -74,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.search_movie:
-                        Intent searchIntent = new Intent(MainActivity.this,SearchActivity.class);
+                        Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(searchIntent);
                         return true;
                     case R.id.favorite_list:

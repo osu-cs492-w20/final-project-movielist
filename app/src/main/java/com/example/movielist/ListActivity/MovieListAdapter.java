@@ -1,5 +1,6 @@
-package com.example.movielist;
+package com.example.movielist.ListActivity;
 
+import com.example.movielist.R;
 import com.example.movielist.data.Movies;
 
 import android.util.Log;

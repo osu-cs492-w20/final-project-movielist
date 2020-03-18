@@ -1,9 +1,11 @@
-package com.example.movielist;
+package com.example.movielist.ListActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.movielist.R;
+import com.example.movielist.SavedListViewModel;
 import com.example.movielist.data.CreatedUserList;
 import com.example.movielist.data.Movies;
 
