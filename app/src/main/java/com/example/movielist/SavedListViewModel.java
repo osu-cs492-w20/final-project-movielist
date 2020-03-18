@@ -16,6 +16,7 @@ import androidx.lifecycle.LiveData;
 
 public class SavedListViewModel extends AndroidViewModel {
     private CreatedUserListRepo mRepository;
+    private LiveData<CreatedUserList> mCreatedUserList;
 
     public SavedListViewModel(@NonNull Application application) {
         super(application);
@@ -46,7 +47,7 @@ public class SavedListViewModel extends AndroidViewModel {
         return mRepository.getAllMovies();
     }
 
-    public LiveData<List<Movies>> getListOfMovies(int listID){
+    public LiveData<List<Movies>> getListOfMovies(String listID){
         return mRepository.getListOfMovies(listID);
     }
 

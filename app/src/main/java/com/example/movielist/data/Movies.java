@@ -11,8 +11,8 @@ import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(foreignKeys = @ForeignKey(
         entity = CreatedUserList.class,
-        parentColumns = "list_id",
-        childColumns = "movie_list_id",
+        parentColumns = "list_title",
+        childColumns = "movie_list_title",
         onDelete = CASCADE
 ))
 public class Movies implements Serializable {
@@ -42,7 +42,7 @@ public class Movies implements Serializable {
     @ColumnInfo(name = "movie_poster_URL")
     public String movie_poster_URL;
 
-    @ColumnInfo(name = "movie_list_id")
-    public int movie_list_id;
+    @ColumnInfo(name = "movie_list_title")
+    public String movie_list_title;
 
 }
