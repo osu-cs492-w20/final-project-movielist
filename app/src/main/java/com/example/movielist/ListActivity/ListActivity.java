@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ListActivity extends AppCompatActivity implements MovieListAdapter.onMovieItemClickedListener {
+public class ListActivity extends AppCompatActivity implements ListAdapter.onMovieItemClickedListener {
     private SavedListViewModel savedListViewModel;
     public static final String EXTRA_LIST_OBJECT = "CreatedUserList";
 
@@ -33,7 +33,7 @@ public class ListActivity extends AppCompatActivity implements MovieListAdapter.
         moviesListRV.setLayoutManager(new LinearLayoutManager(this));
         moviesListRV.setHasFixedSize(true);
 
-        final MovieListAdapter adapter = new MovieListAdapter(this);
+        final ListAdapter adapter = new ListAdapter(this);
         moviesListRV.setAdapter(adapter);
 
         savedListViewModel = new ViewModelProvider(

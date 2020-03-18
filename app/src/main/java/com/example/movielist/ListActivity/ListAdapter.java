@@ -15,7 +15,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieListViewHolder>{
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MovieListViewHolder>{
     private List<Movies> moviesList;
     private onMovieItemClickedListener mMovieClickListener;
 
@@ -23,7 +23,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         void onMovieItemClicked(Movies movie);
     }
 
-    public MovieListAdapter(onMovieItemClickedListener listener){
+    public ListAdapter(onMovieItemClickedListener listener){
         mMovieClickListener = listener;
         moviesList = new ArrayList<>();
     }
@@ -37,7 +37,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieListAdapter.MovieListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListAdapter.MovieListViewHolder holder, int position) {
         String movieTitle = moviesList.get(position).movie_title;
         holder.bind(movieTitle);
     }
