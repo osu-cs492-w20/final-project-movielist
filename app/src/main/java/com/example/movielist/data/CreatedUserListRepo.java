@@ -40,16 +40,9 @@ public class CreatedUserListRepo {
         return mDAO.getMovieLists();
     }
 
-    public LiveData<List<Movies>> getAllMovies(){
-        return mDAO.getAllMovies();
-    }
 
     public LiveData<List<Movies>> getListOfMovies(String listID){
         return mDAO.getListOfMovies(listID);
-    }
-
-    public List<Movies> getMoviesTest(){
-        return mDAO.getMoviesTest();
     }
 
     private static class InsertAsyncTaskMovies extends AsyncTask<Movies, Void, Void>{
