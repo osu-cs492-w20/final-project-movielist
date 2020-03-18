@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         // Remove shadow under action bar.
          getSupportActionBar().setElevation(0);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
 
         mCreatedUserListRV = findViewById(R.id.rv_movie_list);
@@ -56,8 +56,15 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                 new ViewModelProvider.AndroidViewModelFactory(getApplication())
         ).get(SavedListViewModel.class);
 
+        savedVM.getAllLists().observe(this, new Observer<List<CreatedUserList>>() {
+            @Override
+            public void onChanged(List<CreatedUserList> createdUserLists) {
+                mCreatedUserListAdapter.updateCreatedUserList(createdUserLists);
+            }
+        });
+
         //Uncomment to Start test---------------------------
-        testSQLQuieries();
+        //testSQLQuieries();
         //End test-----------------------------
 
         //Instantiates the bottom nav bar and creates a listener just like options selected
@@ -114,23 +121,14 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                             String task = String.valueOf(taskEditText.getText());
                             //Implement adding list
                             createdUserList.list_title = task;
+                            createdUserList.user_name = "sean";
+                            savedVM.insertUserList(createdUserList);
                         }
                     })
                     .setNegativeButton("Cancel", null)
                     .create();
             dialog.show();
             //Edit text box end---------------------------------------------------------------
-
-        //dis not working will fix later
-       /* final Observer<List<CreatedUserList>> testObv2 = new Observer<List<CreatedUserList>>() {
-            @Override
-            public void onChanged(List<CreatedUserList> movies) {
-                mCreatedUserListAdapter.updateCreatedUserList(movies);
-                Log.d("TEST", "onChanged CreatedUserList: " + movies.get(0).list_title);
-            }
-        };
-
-        savedVM.getAllLists().observe(this, testObv2);*/
     }
 
     private void testSQLQuieries(){

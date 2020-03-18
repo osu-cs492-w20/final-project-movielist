@@ -16,6 +16,7 @@ import androidx.lifecycle.LiveData;
 
 public class SavedListViewModel extends AndroidViewModel {
     private CreatedUserListRepo mRepository;
+    private LiveData<CreatedUserList> mCreatedUserList;
 
     public SavedListViewModel(@NonNull Application application) {
         super(application);
