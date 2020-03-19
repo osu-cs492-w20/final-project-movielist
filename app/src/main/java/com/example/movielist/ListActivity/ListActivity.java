@@ -26,6 +26,8 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.onMov
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
 
+        getSupportActionBar().setElevation(0);
+
         Intent intent = getIntent();
         CreatedUserList createdUserList = (CreatedUserList)intent.getSerializableExtra(EXTRA_LIST_OBJECT);
 
