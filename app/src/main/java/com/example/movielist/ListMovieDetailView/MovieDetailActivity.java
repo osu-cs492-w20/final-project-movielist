@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.movielist.R;
@@ -25,10 +26,14 @@ public class MovieDetailActivity extends AppCompatActivity{
             MovieTitleTV.setText(movie.movie_title);
 
             TextView MovieSubtitleTV = findViewById(R.id.subtitle_details);
-            MovieSubtitleTV.setText("Language: " + movie.movie_language + "; Rating: " + movie.movie_votes);
+            MovieSubtitleTV.setText("Language: " + movie.movie_language + ", Rating: " + movie.movie_votes + ", Runtime: " + movie.movie_length);
 
             TextView MovieDescriptionTV = findViewById(R.id.description_details);
             //MovieDescriptionTV.setText()
         }
+    }
+
+    public void onCompletionStatusClicked(View view){
+
     }
 }
