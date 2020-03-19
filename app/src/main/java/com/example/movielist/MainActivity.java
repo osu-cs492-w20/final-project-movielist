@@ -59,9 +59,6 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             }
         });
 
-        //Uncomment to Start test---------------------------
-        //End test-----------------------------
-
         //Instantiates the bottom nav bar and creates a listener just like options selected
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -95,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                 //startActivity(settingsIntent);
 
                 //For testing name the list Bob
-                clicker(iterator);
+                //clicker(iterator);
                 
                 iterator++;
                 return true;
