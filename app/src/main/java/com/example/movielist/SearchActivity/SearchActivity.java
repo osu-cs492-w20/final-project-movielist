@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.movielist.data.MovieDetails;
 import com.example.movielist.R;
 import com.example.movielist.data.MovieNameSearchResult;
 import com.example.movielist.data.Status;

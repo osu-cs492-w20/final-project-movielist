@@ -13,17 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SearchMovieDetailActivity"
-            android:parentActivityName=".SearchActivity">
-        </activity>
-        <activity
-            android:name=".SearchActivity"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
             android:name=".MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
@@ -31,6 +20,17 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".SearchActivity.SearchActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
+            android:name=".SearchActivity.SearchMovieDetailActivity"
+            android:parentActivityName=".SearchActivity.SearchActivity">
         </activity>
         <activity
             android:name=".ListActivity.ListActivity"
