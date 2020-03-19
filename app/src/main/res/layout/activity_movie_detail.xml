@@ -49,17 +49,18 @@
             android:textColor="#000"
             android:textSize="13sp"/>
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleX=".5"
-            android:scaleY=".5"
-            android:saveEnabled="true"
-            android:layout_gravity="center_horizontal"
-            android:numStars="5"/>
+    <EditText
+        android:id="@+id/ET_movie_detail_notes"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="textMultiLine"
+        android:minLines="2"
+        android:lines="5"
+        android:scrollbars="vertical"
+        android:hint="Notes:"/>
 
         <CheckBox
+            android:id="@+id/cb_movie_completion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:saveEnabled="true"
@@ -67,6 +68,16 @@
             android:text="Completion Status"
             android:onClick="onCompletionStatusClicked"
             />
+
+    <RatingBar
+        android:id="@+id/rb_movie_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:saveEnabled="true"
+        android:layout_gravity="center_horizontal"
+        android:numStars="5"/>
 
 
     </LinearLayout>

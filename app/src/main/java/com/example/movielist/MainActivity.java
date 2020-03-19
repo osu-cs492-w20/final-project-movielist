@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                 //startActivity(settingsIntent);
 
                 //For testing name the list Bob
-                //clicker(iterator);
+                clicker(iterator);
                 
                 iterator++;
                 return true;
@@ -150,7 +150,8 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         Movies movie= new Movies();
         movie.movie_title = "Banachocula - " + i;
         movie.movie_id = 1245534 + i;
-        movie.movie_list_title = "Sean";
+        movie.movie_list_title = "Bob";
+        movie.movie_completion_status = false;
         savedVM.insertMovie(movie);
     }
 }
