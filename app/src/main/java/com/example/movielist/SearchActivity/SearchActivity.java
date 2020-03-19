@@ -1,4 +1,4 @@
-package com.example.movielist;
+package com.example.movielist.SearchActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.movielist.data.MovieDetails;
+import com.example.movielist.R;
 import com.example.movielist.data.MovieNameSearchResult;
 import com.example.movielist.data.Status;
 import java.util.List;
