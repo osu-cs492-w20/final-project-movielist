@@ -8,6 +8,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 @Dao
 public interface SavedListsDao {
@@ -18,6 +19,9 @@ public interface SavedListsDao {
 
     @Insert
     void insert(CreatedUserList createdUserList);
+
+    @Update
+    void update(Movies movies);
 
     //Deletes entries from the SQLlite database
     @Delete

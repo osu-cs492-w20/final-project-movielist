@@ -28,6 +28,10 @@ public class CreatedUserListRepo {
         new InsertAsyncTaskUserLists(mDAO).execute(createdUserList);
     }
 
+    public void updateMovie(Movies movie){
+        new UpdateAsyncTaskMovies(mDAO).execute(movie);
+    }
+
     public void deleteMovie(Movies movie){
         new DeleteAsyncTaskMovies(mDAO).execute(movie);
     }
@@ -73,6 +77,23 @@ public class CreatedUserListRepo {
             try {
                 mAsyncTaskDAO.insert(createdUserLists[0]);
             } catch (SQLiteConstraintException e){
+                Log.d("ERROR", "doInBackground: ERROR");
+            }
+            return null;
+        }
+    }
+
+    private static class UpdateAsyncTaskMovies extends AsyncTask<Movies, Void, Void>{
+        private SavedListsDao mAsyncTaskDAO;
+        UpdateAsyncTaskMovies(SavedListsDao dao){
+            mAsyncTaskDAO = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Movies... movies){
+            try {
+                mAsyncTaskDAO.update(movies[0]);
+            } catch (SQLiteConstraintException e) {
                 Log.d("ERROR", "doInBackground: ERROR");
             }
             return null;
