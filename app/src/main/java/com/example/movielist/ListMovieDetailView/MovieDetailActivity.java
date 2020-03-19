@@ -96,4 +96,11 @@ public class MovieDetailActivity extends AppCompatActivity {
         Log.d("Movie", "onBackPressed: " + movie.movie_user_notes);
         super.onBackPressed();
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        savedVM.updateMovie(movie);
+        onBackPressed();
+        return true;
+    }
 }
