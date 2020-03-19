@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.navigation_add:
+                        addList(MainActivity.this);
+                        return true;
                     case R.id.search_movie:
                         Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(searchIntent);
@@ -82,14 +85,11 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
 
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add:
-                //put "addList()" here once implemented
-                addList(this);
-
-                return true;
             case R.id.action_settings:
                 //Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 //startActivity(settingsIntent);
