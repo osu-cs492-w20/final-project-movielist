@@ -89,8 +89,13 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
 
     }
 
-
-
+    //After going back to main activity rerun animation
+    @Override
+    protected void onResume(){
+        super.onResume();
+        runLayoutAnimation(mCreatedUserListRV);
+    }
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
