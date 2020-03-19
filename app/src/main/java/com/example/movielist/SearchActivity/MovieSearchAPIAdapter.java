@@ -1,4 +1,4 @@
-package com.example.movielist;
+package com.example.movielist.SearchActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movielist.R;
 import com.example.movielist.data.MovieNameSearchResult;
-import com.example.movielist.data.MovieSearchAPIAsync;
 
 import java.util.List;
 
