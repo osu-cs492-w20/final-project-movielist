@@ -11,6 +11,7 @@ import com.example.movielist.data.Movies;
 
 import java.util.List;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +28,11 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.onMov
         setContentView(R.layout.activity_movie_list);
 
         getSupportActionBar().setElevation(0);
+        //Removes back arrow in second activity because we have android native arrow.
+        if (getSupportActionBar() != null) {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
 
         Intent intent = getIntent();
         CreatedUserList createdUserList = (CreatedUserList)intent.getSerializableExtra(EXTRA_LIST_OBJECT);
@@ -55,6 +61,7 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.onMov
             });
         }
     }
+
 
     @Override
     public void onMovieItemClicked(Movies movie){

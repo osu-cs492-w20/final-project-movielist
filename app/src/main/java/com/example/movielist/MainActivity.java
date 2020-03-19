@@ -95,7 +95,9 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         super.onResume();
         runLayoutAnimation(mCreatedUserListRV);
     }
-    
+
+    //Add animation when back button pressed
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -161,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra(ListActivity.EXTRA_LIST_OBJECT, createdUserList);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            startActivity(intent);
 
         }
         else{
