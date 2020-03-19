@@ -92,9 +92,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                 //startActivity(settingsIntent);
 
                 //For testing name the list Bob
-                //clicker(iterator);
-                
-                iterator++;
+                clicker(iterator);
                 return true;
             default:
                 return false;
@@ -145,10 +143,27 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
     //For testing insertions
     public void clicker(int i){
         Movies movie= new Movies();
-        movie.movie_title = "Banachocula - " + i;
-        movie.movie_id = 1245534 + i;
+        movie.movie_title = "Friday";
+        movie.movie_id = 10634;
+        movie.movie_poster_URL = "/isWyP4jWmcCHjUcanVwGBDwVSsA.jpg";
+        movie.movie_votes = 932;
+        movie.movie_release_date = "1995-04-26";
+        movie.movie_language = "en";
+        movie.movie_imdb_link = "https://www.imdb.com/title/tt0113118/?ref_=fn_al_tt_1"; //TODO needs to be grabbed during api call or at movie creation
+        movie.movie_overview = "Craig and Smokey are two guys in Los Angeles hanging out on their porch on a Friday afternoon, smoking and drinking, looking for something to do.";
         movie.movie_list_title = "Bob";
         movie.movie_completion_status = false;
         savedVM.insertMovie(movie);
+        /*movie.movie_title = "Freaky Friday";
+        movie.movie_id = 10330;
+        movie.movie_poster_URL = "/w6TR7kTsKmlBYps2i5hzoukBLCn.jpg";
+        movie.movie_votes = 2304;
+        movie.movie_release_date = "2003-08-03";
+        movie.movie_language = "en";
+        movvie.movie_imdb_link = "https://www.imdb.com/title/tt0322330/?ref_=fn_al_tt_1";
+        movie.movie_overview = "Mother and daughter bicker over everything -- what Anna wears, whom she likes and what she wants to do when she's older. In turn, Anna detests Tess's fiancé. When a magical fortune cookie switches their personalities, they each get a peek at how the other person feels, thinks and lives.";
+        movie.movie_list_title = "Bob";
+        movie.movie_completion_status = false;
+        savedVM.insertMovie(movie);*/
     }
 }
