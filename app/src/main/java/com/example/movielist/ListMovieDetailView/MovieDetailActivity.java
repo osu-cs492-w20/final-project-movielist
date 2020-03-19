@@ -68,16 +68,26 @@ public class MovieDetailActivity extends AppCompatActivity {
             });
 
             RatingBar ratingBar = findViewById(R.id.rb_movie_list);
+            ratingBar.setRating(movie.movie_user_rating);
+            ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                    movie.movie_user_rating = v;
+                }
+            });
             if(movie.movie_completion_status){
                 ratingBar.setVisibility(View.VISIBLE);
             } else {
                 ratingBar.setVisibility(View.INVISIBLE);
             }
 
+
+
             CheckBox checkBox = findViewById(R.id.cb_movie_completion);
             checkBox.setChecked(movie.movie_completion_status);
         }
     }
+
 
     public void onCompletionStatusClicked(View view){
         movie.movie_completion_status = !movie.movie_completion_status;
@@ -93,7 +103,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         savedVM.updateMovie(movie);
-        Log.d("Movie", "onBackPressed: " + movie.movie_user_notes);
         super.onBackPressed();
     }
 

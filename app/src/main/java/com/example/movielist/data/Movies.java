@@ -51,4 +51,7 @@ public class Movies implements Serializable {
     @ColumnInfo(name = "movie_user_notes")
     public String movie_user_notes;
 
+    @ColumnInfo(name = "movie_user_rating")
+    public float movie_user_rating;
+
 }
