@@ -1,5 +1,6 @@
 package com.example.movielist.SearchActivity;
 
+import android.graphics.Movie;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.movielist.data.MovieDetails;
 import com.example.movielist.R;
 import com.example.movielist.data.MovieNameSearchResult;
 
@@ -18,7 +20,7 @@ public class MovieSearchAPIAdapter extends RecyclerView.Adapter<MovieSearchAPIAd
     private MovieSearchClickListener movieSearchClickListener;
 
     public interface MovieSearchClickListener{
-        void onMovieClick();
+        void onMovieClick(Integer movieID);
     }
 
     public MovieSearchAPIAdapter(MovieSearchClickListener clickListener){
@@ -52,23 +54,24 @@ public class MovieSearchAPIAdapter extends RecyclerView.Adapter<MovieSearchAPIAd
         holder.bind(movieSearchResults.get(position));
     }
 
-    class MovieSearchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class MovieSearchViewHolder extends RecyclerView.ViewHolder {
         private TextView mSearchResultTV;
 
-        public MovieSearchViewHolder(View itemView){
+        MovieSearchViewHolder(View itemView){
             super(itemView);
             mSearchResultTV = itemView.findViewById(R.id.tv_search_result);
-            itemView.setOnClickListener(this);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    movieSearchClickListener.onMovieClick(movieSearchResults.get(getAdapterPosition()).id);
+                }
+            });
         }
 
-        public void bind(MovieNameSearchResult movieNameSearchResult) {
+        void bind(MovieNameSearchResult movieNameSearchResult) {
             mSearchResultTV.setText(movieNameSearchResult.title); //TODO add contents for the view here
         }
-        @Override
-        public void onClick(View v) {
-            //TODO action here
-        }
-
     }
 
 }
