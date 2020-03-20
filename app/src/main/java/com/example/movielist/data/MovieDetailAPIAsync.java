@@ -13,10 +13,13 @@ import static android.content.ContentValues.TAG;
 
 public class MovieDetailAPIAsync extends AsyncTask<String,Void,String> {
     String TAG = "MovieDetailAPIAsync";
-    private MovieSearchAPIAsync.Callback mCallback;
+    private Callback mCallback;
 
     public interface Callback {
-        void onSearchFinished(MovieNameSearchResult movieResult);
+        void onSearchFinished(MovieDetails movieDetailsResult);
+    }
+    public MovieDetailAPIAsync(Callback callback){
+        mCallback = callback;
     }
 
     @Override
@@ -25,7 +28,7 @@ public class MovieDetailAPIAsync extends AsyncTask<String,Void,String> {
         String searchResults = null;
         try {
             searchResults = NetworkUtils.doHttpGet(url);
-            Log.d(TAG,"Results from HTTPGET Detail" + searchResults);
+            //Log.d(TAG,"Results from HTTPGET Detail" + searchResults);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -35,8 +38,11 @@ public class MovieDetailAPIAsync extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String s){
         super.onPostExecute(s);
-        //MovieDetails movieDetails = MovieUtils.parseMovieDetailsJSON(s);
-        //Log.d(TAG, "MovieDetailResult " + movieDetails.title + " " + movieDetails.overview);
-        //TODO FIX THIS IMPLEMENTATION
+        MovieDetails movieDetailsResult = null;
+        if(s != null){
+            movieDetailsResult = MovieUtils.parseMovieDetailsJSON(s);
+            Log.d(TAG, "MovieDetailResult " + movieDetailsResult.title + " " + movieDetailsResult.overview);
+        }
+        mCallback.onSearchFinished(movieDetailsResult);
     }
 }
