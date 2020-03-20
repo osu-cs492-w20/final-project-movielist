@@ -38,6 +38,7 @@ public class MovieUtils {
     }
     static class MovieDetailsItem {
         Integer id;
+        String backdrop_path;
         String imdb_id;
         Integer budget;
         String homepage;
@@ -125,6 +126,7 @@ public class MovieUtils {
         MovieDetailsItem result = gson.fromJson(movieDetailsJSON, MovieDetailsItem.class);
         if (result != null ) {
             MovieDetails movieDetails = new MovieDetails();
+            movieDetails.backdrop_path = result.backdrop_path;
             movieDetails.id = result.id;
             movieDetails.imdb_id = result.imdb_id;
             movieDetails.budget = result.budget;
