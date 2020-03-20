@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.movielist.ListMovieDetailView.MovieDetailActivity;
 import com.example.movielist.R;
 import com.example.movielist.SavedListViewModel;
 import com.example.movielist.data.CreatedUserList;
@@ -65,6 +66,8 @@ public class ListActivity extends AppCompatActivity implements ListAdapter.onMov
 
     @Override
     public void onMovieItemClicked(Movies movie){
-
+        Intent intent = new Intent(ListActivity.this, MovieDetailActivity.class);
+        intent.putExtra(MovieDetailActivity.EXTRA_MOVIES, movie);
+        startActivity(intent);
     }
 }

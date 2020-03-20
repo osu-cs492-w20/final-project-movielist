@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             }
         });
 
-        //Uncomment to Start test---------------------------
-        //End test-----------------------------
-
         //Instantiates the bottom nav bar and creates a listener just like options selected
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -106,9 +103,7 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                 //startActivity(settingsIntent);
 
                 //For testing name the list Bob
-                //clicker(iterator);
-                
-                iterator++;
+                clicker(iterator);
                 return true;
             default:
                 return false;
@@ -175,9 +170,17 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
     //For testing insertions
     public void clicker(int i){
         Movies movie= new Movies();
-        movie.movie_title = "Banachocula - " + i;
-        movie.movie_id = 1245534 + i;
-        movie.movie_list_title = "Sean";
+        movie.movie_title = "Friday";
+        movie.movie_id = 10634;
+        movie.movie_banner_URL = "/isWyP4jWmcCHjUcanVwGBDwVSsA.jpg";
+        movie.movie_poster_URL = "/z76scMklBnEC91CFqHcvqrS5coO.jpg";
+        movie.movie_votes = 932;
+        movie.movie_release_date = "1995-04-26";
+        movie.movie_language = "en";
+        movie.movie_imdb_link = "https://www.imdb.com/title/tt0113118/?ref_=fn_al_tt_1"; //TODO needs to be grabbed during api call or at movie creation
+        movie.movie_overview = "Craig and Smokey are two guys in Los Angeles hanging out on their porch on a Friday afternoon, smoking and drinking, looking for something to do.";
+        movie.movie_list_title = "Bob";
+        movie.movie_completion_status = false;
         savedVM.insertMovie(movie);
     }
 }
