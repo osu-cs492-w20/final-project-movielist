@@ -87,9 +87,6 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                         Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(searchIntent);
                         return true;
-                    case R.id.favorite_list:
-                        //Here we can have "favorite list intent activity to seperate it or w/e
-                        return true;
                 }
                 return true;
             }

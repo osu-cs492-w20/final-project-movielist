@@ -11,12 +11,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +27,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.movielist.MainActivity;
 import com.example.movielist.CreatedUserListAdapter;
 import com.example.movielist.ListActivity.ListActivity;
 import com.example.movielist.MainActivity;
@@ -35,10 +40,11 @@ import com.example.movielist.data.Movies;
 import com.example.movielist.data.Status;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchMovieDetailActivity extends AppCompatActivity{
+public class SearchMovieDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE_DETAIL = "MovieDetail";
     private Integer movieIDForSearch;
     private String TAG = SearchMovieDetailActivity.class.getSimpleName();
@@ -47,9 +53,12 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
     private TextView mErrorMSGTV;
     private TextView movieTitle;
     private ImageView moviePoster;
+    private String movieIMGURL;
+    private TextView movieOverview;
+    private Button movieIMDB;
     private List<CreatedUserList> mCreatedUserLists;
     private MovieDetails movieDetails = new MovieDetails();
-
+    private String movieIMDBID;
     private List<String> list_names;
     private SavedListViewModel savedVM;
 
@@ -57,8 +66,12 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_movie_detail);
-        Log.d(TAG, "In ACTIVITY NOW");
         movieTitle = findViewById(R.id.tv_movie_detail_title);
+        moviePoster = findViewById(R.id.search_poster_detail);
+        movieOverview = findViewById(R.id.tv_movie_detail_overview);
+        movieIMDB = findViewById(R.id.search_IMDB);
+        movieIMDBID = null;
+        movieIMGURL = null;
 
 
         savedVM = new ViewModelProvider(
@@ -93,28 +106,48 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
                 public void onChanged(MovieDetails movieSearchResults) {
                     if(movieSearchResults != null && movieSearchResults.title != null) {
                         movieDetails = movieSearchResults;
-                        Log.d(TAG,"got details for Movie" + movieSearchResults);
-                        movieTitle.setText(movieSearchResults.title);
+                        Log.d(TAG,"got details for Movie" + movieSearchResults.toString());
+                        String movieRevenue = movieSearchResults.revenue;
+                        String titleFormat = movieSearchResults.title + "\n"+ "\n" + "Runtime: " + movieSearchResults.runtime + "min" + "\n" + "\n" + "Language: " + movieSearchResults.original_language + "\n" + "\n" + "Total Revenue: " + "\n" + "$" + movieRevenue
+                                + "\n" + "\n" + "Released: "+ movieSearchResults.release_date;
+                        movieTitle.setText(titleFormat);
+                    }
+                    if(movieSearchResults != null && movieSearchResults.poster_path != null){
+                        movieIMGURL = "https://image.tmdb.org/t/p/w500" + movieSearchResults.poster_path;
+                        Log.d(TAG,"Movie POSTER URL: " + movieIMGURL);
+                        Glide.with(SearchMovieDetailActivity.this).load(movieIMGURL)
+                                .placeholder(R.drawable.ic_crop_original_black_24dp)
+                                .error(R.drawable.ic_crop_original_black_24dp)
+                                .into(moviePoster);
+                    }
+                    if(movieSearchResults != null && movieSearchResults.overview != null){
+                        String movieOverviewText = "Synopsis: " + "\n"  + movieSearchResults.overview;
+                        movieOverview.setText(movieOverviewText);
+                    }
+                    if(movieSearchResults != null && movieSearchResults.imdb_id != null){
+                        movieIMDBID = movieSearchResults.imdb_id;
                     }
                 }
             });
 
+            try {
+                movieDetailVM.loadMovieDetailSearchResults(movieIDForSearch);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            movieIMDB.setBackgroundColor(Color.YELLOW);
+            movieIMDB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Uri imdb = Uri.parse("https://www.themoviedb.org/redirect?external_source=imdb_id&external_id=" + movieIMDBID);
+                    Log.d(TAG,"IMDB URI: " + imdb);
+                    Intent intent = new Intent(Intent.ACTION_VIEW,imdb);;
+                    if(intent.resolveActivity(getPackageManager()) != null){
+                        startActivity(intent);
+                    }
+                }
+            });
 
-            movieDetailVM.loadMovieDetailSearchResults(movieIDForSearch);
-
-
-            //movieDetailVM.getLoadingStatus().observe(this,new Observer<Status>(){
-            //    @Override
-            //    public void onChanged(Status status) {
-            //        if (status == Status.LOADING) {
-            //            mLoadingPB.setVisibility(View.VISIBLE);
-            //        } else if (status == Status.SUCCESS) {
-            //            mLoadingPB.setVisibility(View.INVISIBLE);
-            //        } else {
-            //            mLoadingPB.setVisibility(View.INVISIBLE);
-            //        }
-            //    }
-            //});
 
             BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
             bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -128,10 +161,6 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
                             Intent homeIntent = new Intent(SearchMovieDetailActivity.this, MainActivity.class);
                             startActivity(homeIntent);
                             return true;
-                        case R.id.search_movie_movie:
-                            Intent searchIntent = new Intent(SearchMovieDetailActivity.this, SearchActivity.class);
-                            startActivity(searchIntent);
-                            return true;
                     }
                     return true;
                 }
@@ -140,14 +169,6 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
         }
     }
 
-    private void viewMovieOnIMDB () {
-
-    }
-
-    //TODO NEED TO IMPLEMENT THIS
-    private void onAddMovieToList(){
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -202,20 +223,4 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
         dialog.show();
     }
 
-    /*    @Override
-    public void onCreatedUserListsClick(CreatedUserList createdUserList) {
-        Movies movie = new Movies();
-        movie.movie_title = movieDetails.title;
-        movie.movie_poster_URL = movieDetails.poster_path;
-        movie.movie_imdb_link = movieDetails.imdb_id;
-        movie.movie_release_date = movieDetails.release_date;
-        movie.movie_overview = movieDetails.overview;
-        movie.movie_language = movieDetails.original_language;
-        movie.movie_votes = (int) movieDetails.vote_count;
-        movie.movie_id = movieDetails.id;
-        //movie.movie_banner_URL = movieDetails.;
-
-        movie.movie_list_title = createdUserList.list_title;
-        savedVM.insertMovie(movie);
-    }*/
 }

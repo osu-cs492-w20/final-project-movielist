@@ -7,10 +7,6 @@
         android:icon="@drawable/ic_action_add"
         android:title="Add List"/>
     <item
-        android:id="@+id/favorite_list"
-        android:icon="@drawable/ic_fav_list"
-        android:title="Favorite List"/>
-    <item
         android:id="@+id/search_movie"
         android:icon="@drawable/ic_search_movie"
         android:title="Search Movie"/>

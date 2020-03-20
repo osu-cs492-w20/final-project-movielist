@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -25,10 +26,13 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.movielist.MainActivity;
 import com.example.movielist.R;
 import com.example.movielist.SavedListViewModel;
+import com.example.movielist.SearchActivity.SearchMovieDetailActivity;
 import com.example.movielist.data.MovieDetailAPIAsync;
 import com.example.movielist.data.Movies;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -153,7 +157,19 @@ public class MovieDetailActivity extends AppCompatActivity {
             } else {
                 ratingBar.setVisibility(View.INVISIBLE);
             }
-
+            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.movNav);
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_home_movie:
+                            Intent homeIntent = new Intent(MovieDetailActivity.this, MainActivity.class);
+                            startActivity(homeIntent);
+                            return true;
+                    }
+                    return true;
+                }
+            });
         }
     }
 
