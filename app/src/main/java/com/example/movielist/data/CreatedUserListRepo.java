@@ -5,6 +5,8 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.database.sqlite.SQLiteConstraintException;
 
+import com.example.movielist.SearchActivity.SearchActivity;
+
 import java.sql.SQLClientInfoException;
 import java.util.List;
 
@@ -28,6 +30,10 @@ public class CreatedUserListRepo {
         new InsertAsyncTaskUserLists(mDAO).execute(createdUserList);
     }
 
+    public void updateMovie(Movies movie){
+        new UpdateAsyncTaskMovies(mDAO).execute(movie);
+    }
+
     public void deleteMovie(Movies movie){
         new DeleteAsyncTaskMovies(mDAO).execute(movie);
     }
@@ -47,6 +53,8 @@ public class CreatedUserListRepo {
 
     private static class InsertAsyncTaskMovies extends AsyncTask<Movies, Void, Void>{
         private SavedListsDao mAsyncTaskDAO;
+        private String TAG = SearchActivity.class.getSimpleName();
+
         InsertAsyncTaskMovies(SavedListsDao dao){
             mAsyncTaskDAO = dao;
         }
@@ -56,7 +64,7 @@ public class CreatedUserListRepo {
             try {
                 mAsyncTaskDAO.insert(movies[0]);
             } catch (SQLiteConstraintException e) {
-                Log.d("ERROR", "doInBackground: ERROR");
+                Log.d(TAG, "doInBackground: ERROR with insertint Movies");
             }
             return null;
         }
@@ -64,6 +72,8 @@ public class CreatedUserListRepo {
 
     private static class InsertAsyncTaskUserLists extends AsyncTask<CreatedUserList, Void, Void>{
         private SavedListsDao mAsyncTaskDAO;
+        private String TAG = SearchActivity.class.getSimpleName();
+
         InsertAsyncTaskUserLists(SavedListsDao dao){
             mAsyncTaskDAO = dao;
         }
@@ -73,7 +83,26 @@ public class CreatedUserListRepo {
             try {
                 mAsyncTaskDAO.insert(createdUserLists[0]);
             } catch (SQLiteConstraintException e){
-                Log.d("ERROR", "doInBackground: ERROR");
+                Log.d(TAG, "doInBackground: ERROR with inserting createdUserList");
+            }
+            return null;
+        }
+    }
+
+    private static class UpdateAsyncTaskMovies extends AsyncTask<Movies, Void, Void>{
+        private SavedListsDao mAsyncTaskDAO;
+        private String TAG = SearchActivity.class.getSimpleName();
+
+        UpdateAsyncTaskMovies(SavedListsDao dao){
+            mAsyncTaskDAO = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Movies... movies){
+            try {
+                mAsyncTaskDAO.update(movies[0]);
+            } catch (SQLiteConstraintException e) {
+                Log.d(TAG, "doInBackground: ERROR with updating Movies");
             }
             return null;
         }
@@ -81,6 +110,7 @@ public class CreatedUserListRepo {
 
     private static class DeleteAsyncTaskMovies extends AsyncTask<Movies, Void, Void>{
         private SavedListsDao mAsyncTaskDAO;
+
         DeleteAsyncTaskMovies(SavedListsDao dao){
             mAsyncTaskDAO = dao;
         }

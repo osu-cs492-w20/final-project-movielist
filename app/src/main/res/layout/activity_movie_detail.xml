@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent">
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/movie_poster"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/ic_photo_black_24dp"
-        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/movie_banner"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_photo_black_24dp"
+                />
+        </RelativeLayout>
+    </ScrollView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/right_block"
+        android:id="@+id/ll_list_detail"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/title_details"
-        android:layout_alignTop="@+id/title_details"
-        android:layout_toRightOf="@+id/movie_poster"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@drawable/gradient_drawable"
         tools:ignore="NotSibling">
 
         <TextView
@@ -29,38 +42,81 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:gravity="center"
             android:text="Testing the apple sauce is saucy"
             android:textColor="#000"
             android:textSize="32sp"/>
 
-        <RatingBar
-            android:id="@+id/ratingBar"
+        <ImageView
+            android:id="@+id/movie_poster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleX=".5"
-            android:scaleY=".5"
-            android:transformPivotX="0dp"
-            android:transformPivotY="0dp"
-            android:saveEnabled="true"
-            android:numStars="5"/>
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_photo_black_24dp"
+            />
 
         <TextView
             android:id="@+id/subtitle_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="Testing the apple sauce is saucy, the tomato paste is pasty, what is the apple-tomatoe taste is tasty"
             android:textColor="#000"
             android:textSize="14sp"/>
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/description_details"
+        <TextView
+            android:id="@+id/description_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@+id/right_block"
+            android:padding="9dp"
+            android:text="Testing the apple sauce is saucy, the tomato paste is pasty, what is the apple-tomatoe taste is tasty"
+            android:textColor="#000"
+            android:textSize="13sp"/>
+
+        <Button
+            android:id="@+id/imdb_link_movie_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:textSize="18dp"
+            android:layout_gravity="center_horizontal"
+            android:text="IMdb"
+            />
+
+    <EditText
+        android:id="@+id/ET_movie_detail_notes"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="textMultiLine"
+        android:minLines="1"
+        android:lines="5"
+        android:scrollbars="vertical"
+        android:hint="Notes:"/>
+
+        <CheckBox
+            android:id="@+id/cb_movie_completion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:saveEnabled="true"
+            android:layout_gravity="center_horizontal"
+            android:text="Completion Status"
+            android:onClick="onCompletionStatusClicked"
+            />
+
+    <RatingBar
+        android:id="@+id/rb_movie_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/right_block"
-        android:padding="9dp"
-        android:text="Testing the apple sauce is saucy, the tomato paste is pasty, what is the apple-tomatoe taste is tasty"
-        android:textColor="#000"
-        android:textSize="13sp"/>
+        android:scaleX=".5"
+        android:scaleY=".5"
+        android:saveEnabled="true"
+        android:layout_gravity="center_horizontal"
+        android:numStars="5"/>
 
-</RelativeLayout>
+
+    </LinearLayout></ScrollView></FrameLayout>
