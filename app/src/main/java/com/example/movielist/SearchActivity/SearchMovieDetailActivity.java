@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
     private ProgressBar mLoadingPB;
     private TextView mErrorMSGTV;
     private TextView movieTitle;
+    private ImageView moviePoster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,9 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
                 }
             });
 
+
             movieDetailVM.loadMovieDetailSearchResults(movieIDForSearch);
+
 
             //movieDetailVM.getLoadingStatus().observe(this,new Observer<Status>(){
             //    @Override
