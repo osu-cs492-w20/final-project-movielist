@@ -3,6 +3,7 @@ package com.example.movielist.data;
 import java.io.Serializable;
 
 public class MovieDetails implements Serializable {
+    public String backdrop_path;
     public Integer id;
     public String imdb_id;
     public Integer budget;
