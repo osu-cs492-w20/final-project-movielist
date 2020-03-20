@@ -40,8 +40,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     private SavedListViewModel savedVM;
 
     private LinearLayout llBody;
-    private ImageView ivPoster;
+    private ImageView ivBanner;
     private TextView MovieTitleTV;
+    private ImageView ivPoster;
     private TextView MovieSubtitleTV;
     private Button MovieIMdbB;
     private TextView MovieDescriptionTV;
@@ -66,12 +67,23 @@ public class MovieDetailActivity extends AppCompatActivity {
             movie = (Movies)intent.getSerializableExtra(EXTRA_MOVIES);
 
             //Drawable Poster = LoadImageFromWebOperations("http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg");
-            ivPoster = findViewById(R.id.movie_poster);
-            ivPoster.setImageAlpha(200);
+            ivBanner = findViewById(R.id.movie_banner);
+            //ivBanner.setImageAlpha(200);
             Glide.with(this)
-                    .load("https://image.tmdb.org/t/p/original" + movie.movie_poster_URL)
+                    .load("https://image.tmdb.org/t/p/original" + movie.movie_banner_URL)
                     //.load(movie.movie_poster_URL) //TODO Uncomment this and reomove above line when URL functionality is present for poster path
                     //.override(900,500)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_crop_original_black_24dp)
+                    .error(R.drawable.ic_crop_original_black_24dp)
+                    .into(ivBanner);
+
+            ivPoster = findViewById(R.id.movie_poster);
+            //ivPoster.setImageAlpha(200);
+            Glide.with(this)
+                    .load("http://image.tmdb.org/t/p/w185/" + movie.movie_poster_URL)
+                    //.load(movie.movie_poster_URL) //TODO Uncomment this and reomove above line when URL functionality is present for poster path
+                    .override(250,350)
                     .centerCrop()
                     .placeholder(R.drawable.ic_crop_original_black_24dp)
                     .error(R.drawable.ic_crop_original_black_24dp)

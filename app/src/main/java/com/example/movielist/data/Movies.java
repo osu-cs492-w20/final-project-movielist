@@ -44,6 +44,9 @@ public class Movies implements Serializable {
     @ColumnInfo(name = "movie_poster_URL")
     public String movie_poster_URL;
 
+    @ColumnInfo(name = "movie_banner_URL")
+    public String movie_banner_URL;
+
     @NonNull
     @ColumnInfo(name = "movie_list_title")
     public String movie_list_title;
