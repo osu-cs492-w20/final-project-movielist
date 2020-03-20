@@ -58,7 +58,7 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
     private Button movieIMDB;
     private List<CreatedUserList> mCreatedUserLists;
     private MovieDetails movieDetails = new MovieDetails();
-
+    private String movieIMDBID;
     private List<String> list_names;
     private SavedListViewModel savedVM;
 
@@ -70,6 +70,7 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
         moviePoster = findViewById(R.id.search_poster_detail);
         movieOverview = findViewById(R.id.tv_movie_detail_overview);
         movieIMDB = findViewById(R.id.search_IMDB);
+        movieIMDBID = null;
         movieIMGURL = null;
 
 
@@ -122,6 +123,9 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
                         String movieOverviewText = "Synopsis: " + "\n"  + movieSearchResults.overview;
                         movieOverview.setText(movieOverviewText);
                     }
+                    if(movieSearchResults != null && movieSearchResults.imdb_id != null){
+                        movieIMDBID = movieSearchResults.imdb_id;
+                    }
                 }
             });
 
@@ -134,13 +138,12 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
             movieIMDB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Uri imdb = Uri.parse();
-                    //Log.d(TAG,"IMDB URI: " + imdb);
-                    //Intent intent = new Intent(Intent.ACTION_VIEW,imdb);
-                    //intent.setData(Uri.parse());
-                    //if(intent.resolveActivity(getPackageManager()) != null){
-                    //    startActivity(intent);
-                    //}
+                    Uri imdb = Uri.parse("https://www.themoviedb.org/redirect?external_source=imdb_id&external_id=" + movieIMDBID);
+                    Log.d(TAG,"IMDB URI: " + imdb);
+                    Intent intent = new Intent(Intent.ACTION_VIEW,imdb);;
+                    if(intent.resolveActivity(getPackageManager()) != null){
+                        startActivity(intent);
+                    }
                 }
             });
 
@@ -156,10 +159,6 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
                         case R.id.navigation_home_movie:
                             Intent homeIntent = new Intent(SearchMovieDetailActivity.this, MainActivity.class);
                             startActivity(homeIntent);
-                            return true;
-                        case R.id.search_movie_movie:
-                            Intent searchIntent = new Intent(SearchMovieDetailActivity.this, SearchActivity.class);
-                            startActivity(searchIntent);
                             return true;
                     }
                     return true;
@@ -180,13 +179,6 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
                 .placeholder(R.drawable.ic_crop_original_black_24dp)
                 .error(R.drawable.ic_crop_original_black_24dp)
                 .into(moviePoster);
-    }
-    private void viewMovieOnIMDB () {
-
-    }
-    //TODO NEED TO IMPLEMENT THIS
-    private void onAddMovieToList(){
-
     }
 
     @Override
