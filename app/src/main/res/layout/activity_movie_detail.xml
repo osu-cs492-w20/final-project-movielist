@@ -81,8 +81,9 @@
             android:id="@+id/imdb_link_movie_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleX=".5"
-            android:scaleY=".5"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:textSize="18dp"
             android:layout_gravity="center_horizontal"
             android:text="IMdb"
             />
