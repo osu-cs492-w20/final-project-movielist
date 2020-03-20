@@ -9,11 +9,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.Observer;
@@ -25,6 +28,7 @@ import com.example.movielist.SearchActivity.SearchActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.movielist.data.CreatedUserList;
 import com.example.movielist.data.Movies;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements CreatedUserListAdapter.CreatedUserListClickListener {
     private RecyclerView mCreatedUserListRV;
@@ -87,7 +91,40 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             }
         });
 
+    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+    itemTouchHelper.attachToRecyclerView(mCreatedUserListRV);
+
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            final int position = viewHolder.getAdapterPosition();
+            final CreatedUserList deletedList;
+           deletedList = mCreatedUserListAdapter.returnListFromPosition(position);
+            switch (direction){
+                case ItemTouchHelper.LEFT:
+                    savedVM.deleteList(deletedList);
+                    mCreatedUserListAdapter.notifyItemRemoved(position);
+                    Snackbar.make(mCreatedUserListRV, deletedList.list_title, Snackbar.LENGTH_LONG)
+                            .setAction("Undo", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    savedVM.insertUserList(deletedList);
+                                    mCreatedUserListAdapter.notifyItemInserted(position);
+                                }
+                            }).show();
+                    break;
+            }
+
+        }
+    };
 
     //After going back to main activity rerun animation
     @Override
