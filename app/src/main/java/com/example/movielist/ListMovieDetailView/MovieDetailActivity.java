@@ -105,7 +105,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(movie.movie_imdb_link));
+                    intent.setData(Uri.parse("https://www.themoviedb.org/redirect?external_source=imdb_id&external_id=" + movie.movie_imdb_link));
                     startActivity(intent);
                 }
             });

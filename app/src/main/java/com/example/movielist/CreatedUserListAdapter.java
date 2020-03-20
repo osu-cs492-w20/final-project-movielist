@@ -53,7 +53,13 @@ public class CreatedUserListAdapter extends RecyclerView.Adapter<CreatedUserList
     public void onBindViewHolder(@NonNull CreatedUserListViewHolder holder, int position) {
         holder.bind(mCreatedUserList.get(position));
     }
-    //MovieItemViewHolder------------------------------------------------------------------------
+
+    //Get list from adapter position------------------------------------------------------------
+    public CreatedUserList returnListFromPosition(int position) {
+        return mCreatedUserList.get(position);
+    }
+
+    //ListItemViewHolder------------------------------------------------------------------------
     class CreatedUserListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView mCreatedUserListsTV;
