@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+<<<<<<< HEAD
 import android.view.Menu;
+=======
+>>>>>>> 7602b7699d43566f400dbe4107a0d2c2dd2ea5d5
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -78,12 +81,15 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
 
     }
 
+<<<<<<< HEAD
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_detail_menu, menu);
         return true;
     }
 
+=======
+>>>>>>> 7602b7699d43566f400dbe4107a0d2c2dd2ea5d5
     //TODO NEED TO IMPLEMENT THIS
     private void onAddMovieToList(){
 
