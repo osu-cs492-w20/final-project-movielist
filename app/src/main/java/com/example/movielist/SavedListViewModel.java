@@ -31,6 +31,8 @@ public class SavedListViewModel extends AndroidViewModel {
         mRepository.insertList(createdUserList);
     }
 
+    public void updateMovie(Movies movie){mRepository.updateMovie(movie);}
+
     public void deleteMovie(Movies movie){
         mRepository.deleteMovie(movie);
     }

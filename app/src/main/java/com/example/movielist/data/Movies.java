@@ -32,8 +32,11 @@ public class Movies implements Serializable {
     @ColumnInfo(name = "movie_length")
     public String movie_length;
 
-    @ColumnInfo(name = "movie_watch_time")
-    public String movie_watch_time;
+    @ColumnInfo(name = "movie_release_date")
+    public String movie_release_date;
+
+    @ColumnInfo(name = "movie_imdb_link")
+    public String movie_imdb_link;
 
     @ColumnInfo(name = "movie_completion_status")
     public boolean movie_completion_status;
@@ -41,8 +44,20 @@ public class Movies implements Serializable {
     @ColumnInfo(name = "movie_poster_URL")
     public String movie_poster_URL;
 
+    @ColumnInfo(name = "movie_banner_URL")
+    public String movie_banner_URL;
+
     @NonNull
     @ColumnInfo(name = "movie_list_title")
     public String movie_list_title;
+
+    @ColumnInfo(name = "movie_overview")
+    public String movie_overview;
+
+    @ColumnInfo(name = "movie_user_notes")
+    public String movie_user_notes;
+
+    @ColumnInfo(name = "movie_user_rating")
+    public float movie_user_rating;
 
 }

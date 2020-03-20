@@ -1,12 +1,16 @@
 package com.example.movielist;
 import java.util.List;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
@@ -59,15 +63,15 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             }
         });
 
-        //Uncomment to Start test---------------------------
-        //End test-----------------------------
-
         //Instantiates the bottom nav bar and creates a listener just like options selected
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.navigation_add:
+                        addList(MainActivity.this);
+                        return true;
                     case R.id.search_movie:
                         Intent searchIntent = new Intent(MainActivity.this, SearchActivity.class);
                         startActivity(searchIntent);
@@ -82,22 +86,24 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
 
     }
 
+    //After going back to main activity rerun animation
+    @Override
+    protected void onResume(){
+        super.onResume();
+        runLayoutAnimation(mCreatedUserListRV);
+    }
+
+    //Add animation when back button pressed
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_add:
-                //put "addList()" here once implemented
-                addList(this);
-
-                return true;
             case R.id.action_settings:
                 //Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 //startActivity(settingsIntent);
 
                 //For testing name the list Bob
-                //clicker(iterator);
-                
-                iterator++;
+                clicker(iterator);
                 return true;
             default:
                 return false;
@@ -130,6 +136,16 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             dialog.show();
             //Edit text box end---------------------------------------------------------------
     }
+
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+    }
   
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -141,16 +157,30 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
     public void onCreatedUserListsClick(CreatedUserList createdUserList) {
         Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra(ListActivity.EXTRA_LIST_OBJECT, createdUserList);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent);
+
+        }
+        else{
+            startActivity(intent);
+        }
     }
 
 
     //For testing insertions
     public void clicker(int i){
         Movies movie= new Movies();
-        movie.movie_title = "Banachocula - " + i;
-        movie.movie_id = 1245534 + i;
-        movie.movie_list_title = "Sean";
+        movie.movie_title = "Friday";
+        movie.movie_id = 10634;
+        movie.movie_banner_URL = "/isWyP4jWmcCHjUcanVwGBDwVSsA.jpg";
+        movie.movie_poster_URL = "/z76scMklBnEC91CFqHcvqrS5coO.jpg";
+        movie.movie_votes = 932;
+        movie.movie_release_date = "1995-04-26";
+        movie.movie_language = "en";
+        movie.movie_imdb_link = "https://www.imdb.com/title/tt0113118/?ref_=fn_al_tt_1"; //TODO needs to be grabbed during api call or at movie creation
+        movie.movie_overview = "Craig and Smokey are two guys in Los Angeles hanging out on their porch on a Friday afternoon, smoking and drinking, looking for something to do.";
+        movie.movie_list_title = "Bob";
+        movie.movie_completion_status = false;
         savedVM.insertMovie(movie);
     }
 }
