@@ -5,13 +5,9 @@
     <item
         android:id="@+id/navigation_add_movie"
         android:icon="@drawable/ic_action_add"
-        android:title="Add Movie"/>
+        android:title="Add Movie to a List"/>
     <item
         android:id="@+id/navigation_home_movie"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Lists"/>
-    <item
-        android:id="@+id/search_movie_movie"
-        android:icon="@drawable/ic_search_movie"
-        android:title="Search Movie"/>
+        android:title="Home"/>
 </menu>
