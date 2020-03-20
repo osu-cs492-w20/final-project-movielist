@@ -105,6 +105,7 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
                 @Override
                 public void onChanged(MovieDetails movieSearchResults) {
                     if(movieSearchResults != null && movieSearchResults.title != null) {
+                        movieDetails = movieSearchResults;
                         Log.d(TAG,"got details for Movie" + movieSearchResults.toString());
                         String movieRevenue = movieSearchResults.revenue;
                         String titleFormat = movieSearchResults.title + "\n"+ "\n" + "Runtime: " + movieSearchResults.runtime + "min" + "\n" + "\n" + "Language: " + movieSearchResults.original_language + "\n" + "\n" + "Total Revenue: " + "\n" + "$" + movieRevenue
@@ -168,18 +169,6 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG,"IN onStart");
-        if(movieIMGURL != null) {
-            Log.d(TAG,"movieIMGURL not null" + movieIMGURL);
-        }
-        Glide.with(this).load(movieIMGURL)
-                .placeholder(R.drawable.ic_crop_original_black_24dp)
-                .error(R.drawable.ic_crop_original_black_24dp)
-                .into(moviePoster);
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -234,20 +223,4 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    /*    @Override
-    public void onCreatedUserListsClick(CreatedUserList createdUserList) {
-        Movies movie = new Movies();
-        movie.movie_title = movieDetails.title;
-        movie.movie_poster_URL = movieDetails.poster_path;
-        movie.movie_imdb_link = movieDetails.imdb_id;
-        movie.movie_release_date = movieDetails.release_date;
-        movie.movie_overview = movieDetails.overview;
-        movie.movie_language = movieDetails.original_language;
-        movie.movie_votes = (int) movieDetails.vote_count;
-        movie.movie_id = movieDetails.id;
-        //movie.movie_banner_URL = movieDetails.;
-
-        movie.movie_list_title = createdUserList.list_title;
-        savedVM.insertMovie(movie);
-    }*/
 }
