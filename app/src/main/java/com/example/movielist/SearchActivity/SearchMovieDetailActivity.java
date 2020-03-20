@@ -26,12 +26,14 @@ import android.widget.TextView;
 
 import com.example.movielist.CreatedUserListAdapter;
 import com.example.movielist.ListActivity.ListActivity;
+import com.example.movielist.MainActivity;
 import com.example.movielist.R;
 import com.example.movielist.SavedListViewModel;
 import com.example.movielist.data.CreatedUserList;
 import com.example.movielist.data.MovieDetails;
 import com.example.movielist.data.Movies;
 import com.example.movielist.data.Status;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,7 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
     private TextView mErrorMSGTV;
     private TextView movieTitle;
     private ImageView moviePoster;
+    private List<CreatedUserList> mCreatedUserLists;
     private MovieDetails movieDetails = new MovieDetails();
 
     private List<String> list_names;
@@ -67,6 +70,7 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
             @Override
             public void onChanged(List<CreatedUserList> createdUserLists) {
                 List<String> newList = new ArrayList<String>();
+                mCreatedUserLists = createdUserLists;
                 for(int i = 0; i < createdUserLists.size();i++){
                     newList.add(createdUserLists.get(i).list_title);
                 }
@@ -112,6 +116,27 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
             //    }
             //});
 
+            BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_add_movie:
+                            addMovie(SearchMovieDetailActivity.this);
+                            return true;
+                        case R.id.navigation_home_movie:
+                            Intent homeIntent = new Intent(SearchMovieDetailActivity.this, MainActivity.class);
+                            startActivity(homeIntent);
+                            return true;
+                        case R.id.search_movie_movie:
+                            Intent searchIntent = new Intent(SearchMovieDetailActivity.this, SearchActivity.class);
+                            startActivity(searchIntent);
+                            return true;
+                    }
+                    return true;
+                }
+            });
+
         }
     }
 
@@ -122,12 +147,6 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
     //TODO NEED TO IMPLEMENT THIS
     private void onAddMovieToList(){
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.search_detail_menu, menu);
-        return true;
     }
 
     @Override
@@ -167,6 +186,15 @@ public class SearchMovieDetailActivity extends AppCompatActivity{
 
                 movie.movie_list_title = list_names.get(i);
                 savedVM.insertMovie(movie);
+
+                Intent intent = new Intent(SearchMovieDetailActivity.this, ListActivity.class);
+                intent.putExtra(ListActivity.EXTRA_LIST_OBJECT, mCreatedUserLists.get(i));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent);
+                }
+                else{
+                    startActivity(intent);
+                }
             }
         });
 

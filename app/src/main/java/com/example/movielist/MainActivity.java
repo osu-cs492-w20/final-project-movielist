@@ -217,7 +217,6 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
         intent.putExtra(ListActivity.EXTRA_LIST_OBJECT, createdUserList);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent);
-
         }
         else{
             startActivity(intent);
