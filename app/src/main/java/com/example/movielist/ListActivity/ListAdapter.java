@@ -1,12 +1,18 @@
 package com.example.movielist.ListActivity;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ViewTarget;
 import com.example.movielist.R;
+import com.example.movielist.data.CreatedUserList;
 import com.example.movielist.data.Movies;
 
+import android.graphics.drawable.Drawable;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,6 +27,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MovieListViewH
 
     public interface onMovieItemClickedListener {
         void onMovieItemClicked(Movies movie);
+    }
+
+    public Movies returnListFromPosition(int position) {
+        return moviesList.get(position);
     }
 
     public ListAdapter(onMovieItemClickedListener listener){
@@ -38,8 +48,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MovieListViewH
 
     @Override
     public void onBindViewHolder(@NonNull ListAdapter.MovieListViewHolder holder, int position) {
-        String movieTitle = moviesList.get(position).movie_title;
-        holder.bind(movieTitle);
+        //String movieTitle = moviesList.get(position).movie_title;
+        Movies theMovie = moviesList.get(position);
+        holder.bind(theMovie);
     }
 
     /*public void addMovie(Movies movie){
@@ -63,10 +74,12 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MovieListViewH
 
     class MovieListViewHolder extends RecyclerView.ViewHolder {
         private TextView Title;
+        private ImageView picture;
 
         public MovieListViewHolder (View itemView){
             super(itemView);
             Title = itemView.findViewById(R.id.tv_movie_title);
+            picture = itemView.findViewById(R.id.movie_picture_preview);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -77,8 +90,18 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.MovieListViewH
             });
         }
 
-        void bind(String newMovieTitle){
-            Title.setText(newMovieTitle);
+        void bind(Movies newMovieTitle){
+            Title.setText(newMovieTitle.movie_title);
+
+            // Glide.with(picture.getContext()).load("https://image.tmdb.org/t/p/original" + newMovieTitle.movie_banner_URL).into(picture);
+            Glide.with(picture.getContext())
+                    .load("http://image.tmdb.org/t/p/w185/" + newMovieTitle.movie_poster_URL)
+                    //.load(movie.movie_poster_URL) //TODO Uncomment this and reomove above line when URL functionality is present for poster path
+                    .override(120,168)
+                    .centerCrop()
+                    .placeholder(R.drawable.ic_crop_original_black_24dp)
+                    .error(R.drawable.ic_crop_original_black_24dp)
+                    .into(picture);
         }
 
     }
