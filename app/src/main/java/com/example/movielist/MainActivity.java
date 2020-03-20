@@ -5,6 +5,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.movielist.data.CreatedUserList;
 import com.example.movielist.data.Movies;
 import com.google.android.material.snackbar.Snackbar;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class MainActivity extends AppCompatActivity implements CreatedUserListAdapter.CreatedUserListClickListener {
     private RecyclerView mCreatedUserListRV;
@@ -113,15 +117,27 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                     savedVM.deleteList(deletedList);
                     mCreatedUserListAdapter.notifyItemRemoved(position);
                     Snackbar.make(mCreatedUserListRV, deletedList.list_title, Snackbar.LENGTH_LONG)
-                            .setAction("Undo", new View.OnClickListener() {
+                            .setAction("Undo and Insert at Bottom", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     savedVM.insertUserList(deletedList);
-                                    mCreatedUserListAdapter.notifyItemInserted(position);
+                                   // mCreatedUserListAdapter.notifyItemInserted(position);
                                 }
                             }).show();
                     break;
             }
+
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark ))
+                    .addSwipeLeftActionIcon(R.drawable.ic_delete)
+                    .create()
+                    .decorate();
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
         }
     };
