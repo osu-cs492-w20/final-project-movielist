@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -75,6 +76,12 @@ public class SearchMovieDetailActivity extends AppCompatActivity {
 
     private void viewMovieOnIMDB () {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.search_detail_menu, menu);
+        return true;
     }
 
     //TODO NEED TO IMPLEMENT THIS
