@@ -1,12 +1,16 @@
 package com.example.movielist;
 import java.util.List;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
@@ -82,7 +86,14 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
 
     }
 
+    //After going back to main activity rerun animation
+    @Override
+    protected void onResume(){
+        super.onResume();
+        runLayoutAnimation(mCreatedUserListRV);
+    }
 
+    //Add animation when back button pressed
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -125,6 +136,16 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             dialog.show();
             //Edit text box end---------------------------------------------------------------
     }
+
+    private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
+
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+    }
   
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -136,7 +157,13 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
     public void onCreatedUserListsClick(CreatedUserList createdUserList) {
         Intent intent = new Intent(this, ListActivity.class);
         intent.putExtra(ListActivity.EXTRA_LIST_OBJECT, createdUserList);
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent);
+
+        }
+        else{
+            startActivity(intent);
+        }
     }
 
 
