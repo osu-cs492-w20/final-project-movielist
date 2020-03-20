@@ -5,15 +5,20 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.lifecycle.Observer;
@@ -25,6 +30,9 @@ import com.example.movielist.SearchActivity.SearchActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.movielist.data.CreatedUserList;
 import com.example.movielist.data.Movies;
+import com.google.android.material.snackbar.Snackbar;
+
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 public class MainActivity extends AppCompatActivity implements CreatedUserListAdapter.CreatedUserListClickListener {
     private RecyclerView mCreatedUserListRV;
@@ -63,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             }
         });
 
+        //Uncomment to Start test---------------------------
+        //End test-----------------------------
+
         //Instantiates the bottom nav bar and creates a listener just like options selected
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -84,7 +95,52 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
             }
         });
 
+    ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+    itemTouchHelper.attachToRecyclerView(mCreatedUserListRV);
+
     }
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            final int position = viewHolder.getAdapterPosition();
+            final CreatedUserList deletedList;
+           deletedList = mCreatedUserListAdapter.returnListFromPosition(position);
+            switch (direction){
+                case ItemTouchHelper.LEFT:
+                    savedVM.deleteList(deletedList);
+                    mCreatedUserListAdapter.notifyItemRemoved(position);
+                    Snackbar.make(mCreatedUserListRV, deletedList.list_title, Snackbar.LENGTH_LONG)
+                            .setAction("Undo and Insert at Bottom", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    savedVM.insertUserList(deletedList);
+                                   // mCreatedUserListAdapter.notifyItemInserted(position);
+                                }
+                            }).show();
+                    break;
+            }
+
+        }
+
+        @Override
+        public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+            new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark ))
+                    .addSwipeLeftActionIcon(R.drawable.ic_delete)
+                    .create()
+                    .decorate();
+
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+
+        }
+    };
 
     //After going back to main activity rerun animation
     @Override
@@ -103,7 +159,9 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
                 //startActivity(settingsIntent);
 
                 //For testing name the list Bob
-                clicker(iterator);
+                //clicker(iterator);
+                
+                iterator++;
                 return true;
             default:
                 return false;
@@ -170,17 +228,9 @@ public class MainActivity extends AppCompatActivity implements CreatedUserListAd
     //For testing insertions
     public void clicker(int i){
         Movies movie= new Movies();
-        movie.movie_title = "Friday";
-        movie.movie_id = 10634;
-        movie.movie_banner_URL = "/isWyP4jWmcCHjUcanVwGBDwVSsA.jpg";
-        movie.movie_poster_URL = "/z76scMklBnEC91CFqHcvqrS5coO.jpg";
-        movie.movie_votes = 932;
-        movie.movie_release_date = "1995-04-26";
-        movie.movie_language = "en";
-        movie.movie_imdb_link = "https://www.imdb.com/title/tt0113118/?ref_=fn_al_tt_1"; //TODO needs to be grabbed during api call or at movie creation
-        movie.movie_overview = "Craig and Smokey are two guys in Los Angeles hanging out on their porch on a Friday afternoon, smoking and drinking, looking for something to do.";
-        movie.movie_list_title = "Bob";
-        movie.movie_completion_status = false;
+        movie.movie_title = "Banachocula - " + i;
+        movie.movie_id = 1245534 + i;
+        movie.movie_list_title = "Sean";
         savedVM.insertMovie(movie);
     }
 }
