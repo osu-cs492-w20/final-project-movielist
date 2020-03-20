@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:inputType="textMultiLine"
-        android:minLines="2"
+        android:minLines="1"
         android:lines="5"
         android:scrollbars="vertical"
         android:hint="Notes:"/>

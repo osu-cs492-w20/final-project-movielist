@@ -79,7 +79,6 @@ public class MovieDetailActivity extends AppCompatActivity {
                     .into(ivBanner);
 
             ivPoster = findViewById(R.id.movie_poster);
-            //ivPoster.setImageAlpha(200);
             Glide.with(this)
                     .load("http://image.tmdb.org/t/p/w185/" + movie.movie_poster_URL)
                     //.load(movie.movie_poster_URL) //TODO Uncomment this and reomove above line when URL functionality is present for poster path
